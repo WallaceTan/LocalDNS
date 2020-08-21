@@ -1,0 +1,51 @@
+version: '3'
+networks:
+  dnsnetwork:
+    ipam:
+      config:
+        - subnet: 10.8.8.0/24
+    
+services:
+  dnsmasq:
+    restart: always
+    image: dnsmasq:2019.8.20
+    environment:
+      - HTTP_USER=foo
+      - HTTP_PASS=bar
+    hostname: dnsmasq
+    networks:
+      dnsnetwork:
+        ipv4_address: 10.8.8.6
+    tty: true
+    volumes:
+      - ./etc/dnsmasq.d/dnsmasq.conf:/etc/dnsmasq.d/dnsmasq.conf
+      - ./etc/dnsmasq.d/adservers.conf:/etc/dnsmasq.d/adservers.conf
+    ports:
+      - "53:53/udp"
+      - "53:53"
+      - "5380:8080"
+    links:
+      - "dnscrypt"
+    cap_add:
+      - NET_ADMIN
+
+  dnscrypt:
+    restart: always
+    image: dnscrypt:2019.8.20
+    hostname: dnscrypt
+    networks:
+      dnsnetwork:
+        ipv4_address: 10.8.8.8
+    tty: true
+    volumes:
+      - ./etc/dnscrypt-proxy.toml:/etc/dnscrypt-proxy.toml
+#   ports:
+#     - "${MY_DOCKER_IP:-127.0.0.1}:53000:53/udp"
+#     - "${MY_DOCKER_IP:-127.0.0.1}:53000:53"
+#   cap_add:
+#     - NET_ADMIN
+#   command: ["tail", "-f", "/dev/null"]
+
+# Visit http://<docker-host>:5380, authenticate with foo/bar and you should see
+# http://foo:bar@localhost:5380
+# docker-compose -f docker-compose.yml up
