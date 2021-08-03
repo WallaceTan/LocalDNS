@@ -1,0 +1,20 @@
+# /etc/systemd/system/central-dns.service
+#$ sudo systemctl enable central-dns
+#$ sudo systemctl start central-dns
+#$ sudo systemctl status central-dns
+
+[Unit]
+Description=Central DNS Service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardError=null
+StandardOutput=null
+WorkingDirectory=/opt/localdns
+ExecStart=/usr/local/bin/docker-compose -f /opt/localdns/docker-compose.yml up -d
+ExecStop=/usr/local/bin/docker-compose -f /opt/localdns/docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
