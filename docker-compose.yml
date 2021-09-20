@@ -2,20 +2,21 @@ version: '3'
 networks:
   dnsnetwork:
     ipam:
+      driver: default
       config:
-        - subnet: 10.8.8.0/24
+        - subnet: "10.8.8.0/24"
     
 services:
   dnsmasq:
     restart: always
-    image: dnsmasq:2019.8.20
+    image: dnsmasq:2021.8.29
     environment:
       - HTTP_USER=foo
       - HTTP_PASS=bar
     hostname: dnsmasq
     networks:
       dnsnetwork:
-        ipv4_address: 10.8.8.6
+        ipv4_address: 10.8.8.3
     tty: true
     volumes:
       - ./etc/dnsmasq.d/dnsmasq.conf:/etc/dnsmasq.d/dnsmasq.conf
@@ -31,11 +32,11 @@ services:
 
   dnscrypt:
     restart: always
-    image: dnscrypt:2019.8.20
+    image: dnscrypt:2021.8.29
     hostname: dnscrypt
     networks:
       dnsnetwork:
-        ipv4_address: 10.8.8.8
+        ipv4_address: 10.8.8.2
     tty: true
     volumes:
       - ./etc/dnscrypt-proxy.toml:/etc/dnscrypt-proxy.toml

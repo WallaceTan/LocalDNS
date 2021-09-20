@@ -35,6 +35,7 @@ server_names = ['cloudflare', 'google']
 ## Example with both IPv4 and IPv6:
 ## listen_addresses = ['127.0.0.1:53', '[::1]:53']
 
+## listen_addresses = ['0.0.0.0:53', '10.8.8.2:53'] -> [FATAL] listen udp 10.8.8.2:53: bind: address already in use
 listen_addresses = ['0.0.0.0:53']
 
 
