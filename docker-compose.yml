@@ -9,7 +9,7 @@ networks:
 services:
   dnsmasq:
     restart: always
-    image: dnsmasq:2021.8.29
+    image: dnsmasq:2022.02.03
     environment:
       - HTTP_USER=foo
       - HTTP_PASS=bar
@@ -19,8 +19,9 @@ services:
         ipv4_address: 10.8.8.3
     tty: true
     volumes:
+#     - ./etc/dnsmasq.d/adservers_extras_hosts.txt:/etc/dnsmasq.d/adservers_extras_hosts.txt
+#     - ./etc/dnsmasq.d/adservers.conf:/etc/dnsmasq.d/adservers.conf
       - ./etc/dnsmasq.d/dnsmasq.conf:/etc/dnsmasq.d/dnsmasq.conf
-      - ./etc/dnsmasq.d/adservers.conf:/etc/dnsmasq.d/adservers.conf
     ports:
       - "53:53/udp"
       - "53:53"

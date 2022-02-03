@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.15
 LABEL maintainer="dev@jpillora.com"
 # webproc release settings
 ENV WEBPROC_VERSION 0.4.0
@@ -22,8 +22,9 @@ COPY etc/dnsmasq.d/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
 
 COPY etc/get_adservers_dnsmasq.sh /etc/get_adservers_dnsmasq.sh
 RUN chmod +x /etc/get_adservers_dnsmasq.sh
-#COPY etc/getadservers.sh /etc/getadservers.sh
-#RUN chmod +x /etc/getadservers.sh
+COPY etc/getadservers.sh /etc/getadservers.sh
+RUN chmod +x /etc/getadservers.sh
+RUN /etc/getadservers.sh
 #run!
 #ENTRYPOINT ["webproc","--configuration-file","/etc/dnsmasq.d/dnsmasq.conf","--","dnsmasq","--no-daemon"]
 ENTRYPOINT ["webproc","-c","/etc/dnsmasq.d/dnsmasq.conf","-c","/etc/dnsmasq.d/adservers.conf","--","dnsmasq","--no-daemon","--"]
