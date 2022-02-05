@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=2022.02.03
+VERSION=2022.02.05
 docker build --no-cache -f dnscrypt/Dockerfile -t dnscrypt:${VERSION} .
 docker build --no-cache -f dnsmasq/Dockerfile -t dnsmasq:${VERSION} .
 docker compose -f docker-compose.yml up -d

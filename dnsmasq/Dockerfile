@@ -16,7 +16,8 @@ RUN mkdir -p /etc/default/
 COPY etc/default/dnsmasq /etc/default/dnsmasq
 
 RUN mkdir -p /etc/dnsmasq.d/
-COPY etc/dnsmasq.d/adservers_extras_hosts.txt /etc/dnsmasq.d/adservers_extras_hosts.txt
+COPY etc/dnsmasq.d/adservers_add.txt /etc/dnsmasq.d/adservers_add.txt
+COPY etc/dnsmasq.d/adservers_remove.txt /etc/dnsmasq.d/adservers_remove.txt
 COPY etc/dnsmasq.d/adservers.conf /etc/dnsmasq.d/adservers.conf
 COPY etc/dnsmasq.d/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
 

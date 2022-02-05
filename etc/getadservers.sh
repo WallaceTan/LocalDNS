@@ -19,6 +19,8 @@ listurl="https://pgl.yoyo.org/adservers/serverlist.php?${listurlargs}"
 
 # location of a file where hostnames not listed can be added
 extrasfile='/etc/dnsmasq.d/adservers_extras_hosts.txt'
+adservers_add='/etc/dnsmasq.d/adservers_add.txt'
+adservers_remove='/etc/dnsmasq.d/adservers_remove.txt'
 
 ## command to reload dnsmasq - change according to your system
 ## not sure if we need this for dnsmasq
@@ -39,10 +41,10 @@ echo "**************************************************************************
 echo ">>> $fetchcmd"
 $fetchcmd
 
-# add $extrasfile to $tmpfile
+# add $adservers_add to $tmpfile
 echo "********************************************************************************"
-echo ">>> Add $extrasfile to $tmpfile"
-[ -f "$extrasfile" ]  && cat $extrasfile >> $tmpfile
+echo ">>> Add $adservers_add to $tmpfile"
+[ -f "$adservers_add" ]  && cat $adservers_add >> $tmpfile
 
 # check the temp file exists OK before overwriting the existing list
 if  [ ! -s $tmpfile ]
@@ -62,9 +64,25 @@ while read line; do
     echo "address=\"${ADDRESS}\"" | tee -a $newconffile
 done < <(sort $tmpfile | uniq -u)
 
+# check the adservers_remove file exists OK before overwriting the existing list
+echo "********************************************************************************"
+if  [ -s $adservers_remove ]
+echo ">>> Remove $adservers_add to $newconffile"
+then
+    while read line; do
+        echo "sed -e '/${line}/ s/^#*/# /' -i $newconffile"
+        sed -e '/'"${line}"'/ s/^#*/# /' -i $newconffile
+    done < $adservers_remove
+fi
+
 # $reloadcmd
 echo "********************************************************************************"
 echo ">>> Delete $tmpfile"
-##rm $tmpfile
-##cp $newconffile $conffile
+rm $tmpfile
+echo "********************************************************************************"
+echo ">>> Copy $newconffile to $conffile"
+cp $newconffile $conffile
+echo "********************************************************************************"
+echo ">>> Delete $newconffile"
+rm $newconffile
 exit 0
