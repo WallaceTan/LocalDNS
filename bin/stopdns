@@ -1,0 +1,6 @@
+#!/bin/bash
+echo -e ">>> docker compose down"
+docker compose down
+
+echo -e "\n>>> sudo networksetup -setdnsservers Wi-Fi empty"
+sudo networksetup -setdnsservers Wi-Fi empty

@@ -1,0 +1,12 @@
+#!/bin/bash
+echo -e ">>> sudo networksetup -getdnsservers Wi-Fi"
+sudo networksetup -getdnsservers Wi-Fi
+
+echo -e "\n>>> sudo networksetup -setdnsservers Wi-Fi empty"
+sudo networksetup -setdnsservers Wi-Fi empty
+
+echo -e "\n>>> docker compose up -d"
+docker compose up -d
+
+echo -e "\n>>> sudo networksetup -setdnsservers Wi-Fi 127.0.0.1"
+sudo networksetup -setdnsservers Wi-Fi 127.0.0.1

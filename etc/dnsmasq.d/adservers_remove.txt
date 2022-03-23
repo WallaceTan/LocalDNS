@@ -5,3 +5,12 @@ partnerad.l.google.com
 video-stats.video.google.com
 wintricksbanner.googlepages.com
 www-google-analytics.l.google.com
+adfoc.us
+googleadservices.com
+googletagmanager.com
+ichnaea-web.netflix.com
+s.youtube.com
+google-analytics.com
+sync.opera.com
+adservice.google.com
+analytics.google.com

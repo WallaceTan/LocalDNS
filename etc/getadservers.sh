@@ -71,7 +71,8 @@ echo ">>> Remove $adservers_add to $newconffile"
 then
     while read line; do
         echo "sed -e '/${line}/ s/^#*/# /' -i $newconffile"
-        sed -e '/'"${line}"'/ s/^#*/# /' -i $newconffile
+        sed -e "/${line}/ s/^#*\s*/# /" -i $newconffile
+        # sed -e "/googletagmanager.com/ s/^#*\s*/# /" -i $newconffile && grep "googletagmanager.com" $newconffile
     done < $adservers_remove
 fi
 

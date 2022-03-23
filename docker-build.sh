@@ -1,7 +1,7 @@
 #!/bin/bash
-VERSION=2022.02.05
-docker build --no-cache -f dnscrypt/Dockerfile -t dnscrypt:${VERSION} .
+VERSION=2022.03.22
 docker build --no-cache -f dnsmasq/Dockerfile -t dnsmasq:${VERSION} .
+docker build --no-cache -f dnscrypt/Dockerfile -t dnscrypt:${VERSION} .
 docker compose -f docker-compose.yml up -d
 #docker-compose -f docker-compose.yml up
 # Visit http://<docker-host>:5380, authenticate with foo/bar and you should see

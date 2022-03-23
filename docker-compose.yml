@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 networks:
   dnsnetwork:
     ipam:
@@ -9,17 +9,19 @@ networks:
 services:
   dnsmasq:
     restart: always
-    image: dnsmasq:2022.02.05
-    environment:
-      - HTTP_USER=foo
-      - HTTP_PASS=bar
+    image: dnsmasq:2022.03.22
     hostname: dnsmasq
+    environment:
+      - "PS1=🐳 \\e[1;36m[$$(date '+%F %T %a %Z')] \\e[1;33m\\u\\e[m@\\e[1;32m\\h:\\e[1;33m\\w\\e[m\\ $$ "
+      - "TZ=Asia/Singapore"
+      - "HTTP_USER=foo"
+      - "HTTP_PASS=bar"
     networks:
       dnsnetwork:
         ipv4_address: 10.8.8.3
     tty: true
     volumes:
-      - ./etc/dnsmasq.d/adservers.conf:/etc/dnsmasq.d/adservers.conf
+#     - ./etc/dnsmasq.d/adservers.conf:/etc/dnsmasq.d/adservers.conf
       - ./etc/dnsmasq.d/dnsmasq.conf:/etc/dnsmasq.d/dnsmasq.conf
     ports:
       - "53:53/udp"
@@ -34,6 +36,8 @@ services:
     restart: always
     image: dnscrypt:2021.8.29
     hostname: dnscrypt
+    environment:
+      - "PS1=🐳 \\e[1;36m[$$(date '+%F %T %a %Z')] \\e[1;33m\\u\\e[m@\\e[1;32m\\h:\\e[1;33m\\w\\e[m\\ $$ "
     networks:
       dnsnetwork:
         ipv4_address: 10.8.8.2
